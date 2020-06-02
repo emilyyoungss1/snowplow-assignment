@@ -1,0 +1,128 @@
+{% load static %}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href={% static 'facesapp/style.css' %}>
+    <title>FaceApp</title>
+
+    <script src="{% static 'facesapp/jscolor.js' %}"></script>
+
+    <script type="text/javascript">
+        ;(function (p, l, o, w, i, n, g) {
+            if (!p[i]) {
+                p.GlobalSnowplowNamespace = p.GlobalSnowplowNamespace || [];
+                p.GlobalSnowplowNamespace.push(i);
+                p[i] = function () {
+                    (p[i].q = p[i].q || []).push(arguments)
+                };
+                p[i].q = p[i].q || [];
+                n = l.createElement(o);
+                g = l.getElementsByTagName(o)[0];
+                n.async = 1;
+                n.src = w;
+                g.parentNode.insertBefore(n, g)
+            }
+        }(window, document, "script", "{% static 'facesapp/sp.js' %}", "snowplow"));
+
+        window.snowplow('newTracker', 'spmini', '127.0.0.1:9090', { // Initialise a tracker
+
+        });
+
+        window.snowplow('trackPageView');
+        window.snowplow('enableActivityTracking', 10, 10); // Ping every 10 seconds after 10 seconds
+
+    </script>
+    <!-- Snowplow stops plowing -->
+
+    <script type="text/javascript">
+
+        var cursorX;
+        var cursorY;
+        document.addEventListener("mousemove", function (e) {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+        })
+
+        function load_html(url) {
+            req = new XMLHttpRequest();
+            req.open("GET", url, false);
+            req.send(null);
+            return req.responseText
+        }
+
+        let currentElem = null;
+        let currTime = 0;
+        let imgset = {{ imgset_init }}
+
+            timer = setInterval(timerIncrement, 1000);
+
+        function timerIncrement() {
+            if (!currentElem) return;
+            currTime++;
+        }
+
+        function mouse_left_img(img, i) {
+            currentElem = null;
+            window.snowplow('trackStructEvent', 'Faces', 'Hover', img.getAttribute("src"), i, currTime);
+            currTime = 0
+        }
+
+        function mouse_enter_img(img) {
+            if (currentElem) return;
+            currentElem = img;
+        }
+
+        function relative_coordinates(element) {
+            var rect = element.getBoundingClientRect();
+            var x = cursorX - rect.x; //x position within the element.
+            var y = cursorY - rect.y;  //y position within the element.
+            return [x, y]
+        }
+
+        function onclick_img(img, i) {
+            var coords = relative_coordinates(img)
+            window.snowplow('trackStructEvent', 'Faces', 'Selection', img.getAttribute("src"), i, coords);
+            mouse_left_img(img,i)
+            new_set_of_pics()
+        }
+
+        function register_trackers() {
+            var imgs = document.getElementsByClassName("floated_img")
+            for (var i = 0; i < imgs.length; i++) {
+                var img = imgs[i];
+                img.i = i
+                img.addEventListener('click', function (event) {
+                    onclick_img(event.currentTarget, event.currentTarget.i)
+                })
+
+                img.addEventListener("mouseover", function (event) {
+                    mouse_enter_img(event.currentTarget)
+                })
+
+                img.addEventListener("mouseout", function (event) {
+                    mouse_left_img(event.currentTarget, event.currentTarget.i)
+                })
+            }
+
+        }
+
+        function new_set_of_pics() {
+            imgset++
+            document.getElementById("image-grid").innerHTML = load_html("{% url 'new_images' %}?imgset=" + imgset)
+            register_trackers();
+        }
+
+        window.addEventListener("load", function () {
+            register_trackers();
+        })
+
+    </script>
+</head>
+
+<body>
+<div id="image-grid" class="row">
+    {% include 'facesapp/image_grid.html' %}
+</div>
+</body>
+
+</html>
