@@ -1,5 +1,5 @@
 module.exports = {
-    'Number of pics consistent' : function(browser) {
+    'Number of images consistent in main page' : function(browser) {
         browser
             .url('http://127.0.0.1:8000/')
             .saveScreenshot('tests_output/initial.png');
@@ -16,7 +16,7 @@ module.exports = {
 
     },
 
-    'Four pics returned' : function(browser) {
+    'Ajax site returns four images' : function(browser) {
         browser
             .url('http://127.0.0.1:8000/new_images?imgset=1')
             .saveScreenshot('tests_output/ajax.png');
