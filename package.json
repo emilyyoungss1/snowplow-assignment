@@ -1,0 +1,24 @@
+{
+  "name": "snowplow-assignment",
+  "version": "1.0.0",
+  "description": "The purpose of this application is to track user choice. Currently, online age veriﬁcation generally consists of either identiﬁcation, intruding a user’s privacy, or self-declaration, which is generally ineﬀective as children often lie about their age. This project presents a mechanism that utilises the drawbacks of graphical authentication methods and adapts them to create an age gate which avoids an unwarranted privacy invasion. This proposed mechanism uses Passfaces and PassPoints together to examine whether or not a participants age aﬀected their response for either of these techniques. Passfaces require a number of faces to make up a “Passfaces code” (passcode) much like how passwords require a number of alphanumeric characters to make up a word. Essentially, Passfaces works by replacing\r each individual character of a password with a human face. PassPoints is another authentication technique in which the user chooses several points on this image in a deﬁned order; to authenticate, the user must click these chosen points (within an adjustable distance), typically within 0.25cm from the actual click point.\r This application is created with Django as the server side using JavaScript - no other external libraries such as JQuery or Angular. Furthermore, I did not use a database as this application is static it was not neccesary to add complexity to the solution. Therefore, the images in this application are hardcoded. In order to make this application more user friendly and interactive, I used AJAX calls to retrieve the new images and render them in HTML; the AJAX call renders an auxaliary Django view. As requested in the task, I locally run the snowplow micro as a receiver.",
+  "main": "index.js",
+  "scripts": {
+    "test": "nightwatch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilyyoungss1/snowplow-assignment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emilyyoungss1/snowplow-assignment/issues"
+  },
+  "homepage": "https://github.com/emilyyoungss1/snowplow-assignment#readme",
+  "devDependencies": {
+    "chromedriver": "^83.0.0",
+    "nightwatch": "^1.3.6"
+  }
+}

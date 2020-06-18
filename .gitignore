@@ -1,6 +1,10 @@
 
 # Created by https://www.gitignore.io/api/django,python,pycharm
 # Edit at https://www.gitignore.io/?templates=django,python,pycharm
+### Nightwatch ###
+tests_output
+node_modules
+.idea
 
 ### Django ###
 *.log
