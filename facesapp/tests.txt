@@ -1,0 +1,15 @@
+tests to do:
+1. simulating user who clicks on image - to ensure it is tracked properly with micro
+2. simulating user who hovers on an image
+3. when user clicks on image, assign an image attribute in the html
+- when it is clicked, check that the attribute assigned to this image has been clicked (sent to micro)
+
+
+
+in onClick for django can make a send to micro
+- check assertEqual in nightwatch (check for diff asserts, mayb one with JS variables or elements)
+can change server code to be use in nightwatch
+
+can we only communicate through html elements or from java script variables also?
+If we can communicate through variables then i could use the django server to set a binary variable like snowplow request sent
+check if this variable is set to true in nightwatch

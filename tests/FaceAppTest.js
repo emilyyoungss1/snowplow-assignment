@@ -1,3 +1,11 @@
+before : function(browser) {
+    browser
+      .useXpath()
+      .url('http://127.0.0.1:8000/')
+      .setValue('//input[@name="username"]', browser.globals.username)
+      .setValue('//input[@name="password"]', browser.globals.password)
+     },
+
 module.exports = {
     'Number of images consistent in main page' : function(browser) {
         browser
@@ -25,4 +33,8 @@ module.exports = {
 
         browser.waitForElementVisible(imgClass, 'Image is visible').assert.elementPresent(".floated_img:nth-of-type(4)", "Four images present");
     }
+
+    after : function(browser) {
+        browser.end();
+      }
 };
