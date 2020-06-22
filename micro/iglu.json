@@ -3,6 +3,7 @@
     "data": {
       "cacheSize": 500,
       "repositories": [
+        "url": "https://localhost:8000/"
         {
           "name": "Iglu Central",
           "priority": 0,
